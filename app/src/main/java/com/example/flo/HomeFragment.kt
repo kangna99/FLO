@@ -17,6 +17,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.homeWidget1AlbumIv.setOnClickListener {
+            //context~: fragment를 어디서 변경하는지
+            (context as MainActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, AlbumFragment())
+                .commitAllowingStateLoss()
+        }
 
 
         return binding.root

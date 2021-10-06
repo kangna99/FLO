@@ -1,7 +1,10 @@
 package com.example.flo
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -10,30 +13,30 @@ import com.example.flo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    val song = Song("", "", false)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        window?.decorView?.systemUiVisibility =
-//            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//        window.statusBarColor = Color.TRANSPARENT
+        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        setPlayerStatus(spf.getBoolean("isPlaying", false))
 
-//        window.apply {
-//            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-//                statusBarColor = Color.TRANSPARENT
-//                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//            }
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//            }
-//        }
+        //val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), getPlayStatus())
+        song.title = binding.mainMiniplayerTitleTv.text.toString()
+        song.singer = binding.mainMiniplayerSingerTv.text.toString()
 
-//        val window = window
-//        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        //Log.d("Log test", song.title + song.singer)
+
+        binding.mainPlayerLayout.setOnClickListener {
+            //startActivity(Intent(this, SongActivity::class.java))
+            val intent = Intent(this, SongActivity::class.java)
+            intent.putExtra("title", song.title)
+            intent.putExtra("singer", song.singer)
+            intent.putExtra("isPlaying", song.isPlaying)
+            startActivity(intent)
+        }
 
         initNavigation()
 
@@ -71,6 +74,46 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
+        binding.mainMiniplayerBtn.setOnClickListener {
+            setPlayerStatus(true)
+        }
+        binding.mainPauseBtn.setOnClickListener {
+            setPlayerStatus(false)
+        }
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        setPlayerStatus(spf.getBoolean("isPlaying", false))
+    }
+
+    private fun setPlayerStatus(isPlaying: Boolean) {
+        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val editor = spf.edit()
+        editor.putBoolean("isPlaying", isPlaying)
+        editor.apply()
+
+        if (isPlaying) {
+            binding.mainMiniplayerBtn.visibility = View.GONE
+            binding.mainPauseBtn.visibility = View.VISIBLE
+
+        } else {
+            binding.mainMiniplayerBtn.visibility = View.VISIBLE
+            binding.mainPauseBtn.visibility = View.GONE
+        }
+
+        //putPlayStatus(isPlaying)
+    }
+
+    private fun getPlayStatus(): Boolean {
+        return intent.getBooleanExtra("isPlaying", false)
+    }
+
+    private fun putPlayStatus(isPlaying: Boolean) {
+        intent.putExtra("isPlaying", isPlaying)
     }
 
     private fun initNavigation() {
