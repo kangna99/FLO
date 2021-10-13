@@ -102,6 +102,7 @@
         app:itemIconSize="25dp"
         app:itemIconTint="@drawable/main_btm_color_selector"
         app:itemTextColor="@drawable/main_btm_color_selector"
+        app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

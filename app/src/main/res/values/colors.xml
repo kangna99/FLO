@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="highlight">#4735EC</color>
     <color name="lightGray">#CDCDCD</color>
+    <color name="darkGray">#222222</color>
 
 </resources>

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("isPlaying", song.isPlaying)
             startActivity(intent)
         }
-
+        
         initNavigation()
 
         binding.mainBnv.setOnItemSelectedListener {
