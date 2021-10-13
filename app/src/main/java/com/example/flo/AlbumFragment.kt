@@ -109,10 +109,9 @@ class AlbumFragment : Fragment() {
 //            }
 //        }
 //    }
-
+//
 //    private fun setMixStatus(Mix: Boolean) {
 //        if (Mix) {
-//
 //            binding.albumMixSwitch1.visibility = View.GONE
 //            binding.albumMixSwitch2.visibility = View.VISIBLE
 //            Toast.makeText(activity, "내 취향 순서로 변경했습니다.", Toast.LENGTH_SHORT).show()
