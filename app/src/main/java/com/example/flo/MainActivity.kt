@@ -13,32 +13,41 @@ import com.example.flo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    val song = Song("", "", false)
+    private lateinit var player : MainActivity.Player
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        setPlayerStatus(spf.getBoolean("isPlaying", false))
+        initNavigation()
 
-        //val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), getPlayStatus())
-        song.title = binding.mainMiniplayerTitleTv.text.toString()
-        song.singer = binding.mainMiniplayerSingerTv.text.toString()
 
-        //Log.d("Log test", song.title + song.singer)
+//        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 215, getPlayStatus())
+        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 215, false)
+        Log.d("Log test", song.title + song.singer + song.playTime + song.isPlaying)
+        player = Player(song.playTime, song.isPlaying)
+        player.start()
 
         binding.mainPlayerLayout.setOnClickListener {
-            //startActivity(Intent(this, SongActivity::class.java))
             val intent = Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
             intent.putExtra("singer", song.singer)
+            intent.putExtra("playTime", song.playTime)
             intent.putExtra("isPlaying", song.isPlaying)
             startActivity(intent)
         }
-        
-        initNavigation()
+
+        binding.mainPlayBtn.setOnClickListener {
+            setPlayerStatus(true)
+            player.isPlaying = true
+            Log.d("Log test", song.title + song.singer + song.playTime + song.isPlaying)
+        }
+        binding.mainPauseBtn.setOnClickListener {
+            setPlayerStatus(false)
+            player.isPlaying = false
+            Log.d("Log test", song.title + song.singer + song.playTime + song.isPlaying)
+        }
 
         binding.mainBnv.setOnItemSelectedListener {
             when (it.itemId) {
@@ -73,54 +82,63 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
-
-        binding.mainMiniplayerBtn.setOnClickListener {
-            setPlayerStatus(true)
-        }
-        binding.mainPauseBtn.setOnClickListener {
-            setPlayerStatus(false)
-        }
-
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-
-        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        setPlayerStatus(spf.getBoolean("isPlaying", false))
     }
 
     private fun setPlayerStatus(isPlaying: Boolean) {
-        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = spf.edit()
-        editor.putBoolean("isPlaying", isPlaying)
-        editor.apply()
-
         if (isPlaying) {
-            binding.mainMiniplayerBtn.visibility = View.GONE
+            binding.mainPlayBtn.visibility = View.GONE
             binding.mainPauseBtn.visibility = View.VISIBLE
 
         } else {
-            binding.mainMiniplayerBtn.visibility = View.VISIBLE
+            binding.mainPlayBtn.visibility = View.VISIBLE
             binding.mainPauseBtn.visibility = View.GONE
         }
-
-        //putPlayStatus(isPlaying)
-    }
-
-    private fun getPlayStatus(): Boolean {
-        return intent.getBooleanExtra("isPlaying", false)
-    }
-
-    private fun putPlayStatus(isPlaying: Boolean) {
-        intent.putExtra("isPlaying", isPlaying)
+//        putPlayStatus(isPlaying)
     }
 
     private fun initNavigation() {
         supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment())
             .commitAllowingStateLoss()
-
     }
+
+    inner class Player(private val playTime : Int, var isPlaying : Boolean) : Thread() {
+        private var second = 0
+
+        override fun run() { //run 코드가 끝나면 쓰레드도 종료
+            try {
+                while(true) {
+                    if(second >= playTime) {
+                        break
+                    }
+
+                    if(isPlaying) {
+                        sleep(1000)
+                        second++
+
+                        runOnUiThread { //handler를 쓰는 방법도 있음
+                            binding.mainPlayerSb.progress = second*1000/playTime
+                        }
+                    }
+                }
+            }catch (e:InterruptedException){
+                Log.d("interrupt", "쓰레드가 종료되었습니다.")
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        player.interrupt() //쓰레드 종료
+        super.onDestroy()
+    }
+
+//    private fun getPlayStatus(): Boolean {
+//        return intent.getBooleanExtra("isPlaying", false)
+//    }
+//
+//    private fun putPlayStatus(isPlaying: Boolean) {
+//        intent.putExtra("isPlaying", isPlaying)
+//        Log.d("상태", "isPlaying" + isPlaying)
+//    }
 
 }
 

@@ -13,6 +13,22 @@
         app:layout_constraintBottom_toTopOf="@id/main_player_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <SeekBar
+        android:id="@+id/main_player_sb"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@null"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progress="0"
+        android:max="1000"
+        android:progressTint="@color/highlight"
+        android:progressBackgroundTint="@color/lightGray"
+        android:thumb="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_frm"
+        app:layout_constraintBottom_toTopOf="@id/main_player_layout"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_player_layout"
@@ -23,7 +39,6 @@
         android:background="#F9F9F9">
 
         <LinearLayout
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -31,22 +46,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/main_miniplayer_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
+                tools:text="라일락"
                 android:text="라일락"
-                android:textColor="@color/black"
-                />
+                android:textColor="@color/black" />
             <TextView
                 android:id="@+id/main_miniplayer_singer_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                tools:text="아이유 (IU)"
                 android:text="아이유 (IU)"/>
-
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +79,7 @@
                 android:src="@drawable/btn_miniplayer_previous" />
 
             <ImageView
-                android:id="@+id/main_miniplayer_btn"
+                android:id="@+id/main_play_btn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/btn_miniplayer_play"/>

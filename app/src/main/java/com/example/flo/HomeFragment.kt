@@ -1,6 +1,8 @@
 package com.example.flo
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,14 @@ import com.example.flo.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
+
+    var currentPage = 0
+    private val handler = Handler(Looper.getMainLooper()) {
+        setPage()
+        true
+    }
+    val thread = Thread(PagerRunnable())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +35,7 @@ class HomeFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
+        //배너(banner)
         val bannerAdapter = BannerViewpagerAdapter(this)
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
@@ -34,21 +45,42 @@ class HomeFragment : Fragment() {
         binding.homeBannerVp.adapter = bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
+
+        //상단 추천음악
         val recommendAdapter = RecommendViewpagerAdapter(this)
         binding.homeRecommendVp.adapter = recommendAdapter
-
         binding.homeRecommendInd.setViewPager(binding.homeRecommendVp)
-//        binding.homeBackgroundInd.createIndicators(3,0)
-//        binding.homeBackgroundVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position : Int) {
-//                super.onPageSelected(position)
-//                binding.homeBackgroundInd.animatePageSelected(position)
-//            }
-//        })
 
+        thread.start()
 
         return binding.root
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        //쓰레드 시작
+//        thread.start()
+//    }
+//
+//    override fun onPause() {
+//        //쓰레드 종료
+//        thread.interrupt()
+//        super.onPause()
+//    }
 
+    fun setPage() {
+        if(currentPage == 4)
+            currentPage = 0
+        binding.homeBannerVp.setCurrentItem(currentPage, true)
+        currentPage+=1
+    }
+
+    inner class PagerRunnable : Runnable {
+        override fun run() {
+            while(true) {
+                Thread.sleep(2000)
+                handler.sendEmptyMessage(0)
+            }
+        }
+    }
 }

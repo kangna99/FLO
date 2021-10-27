@@ -2,6 +2,9 @@ package com.example.flo
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,20 +13,19 @@ import com.example.flo.databinding.ActivitySongBinding
 class SongActivity : AppCompatActivity() {
 
     lateinit var binding : ActivitySongBinding
-    val song = Song("", "", false)
+
+    private val song : Song = Song()
+    private lateinit var player : Player
+//    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val spf: SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        setPlayerStatus(spf.getBoolean("isPlaying", false))
-
-        if(intent.hasExtra("title") && intent.hasExtra("singer")) {
-            binding.songTitleTv.text = intent.getStringExtra("title")
-            binding.songSingerTv.text = intent.getStringExtra("singer")
-        }
+        initSong()
+        player = Player(song.playTime, song.isPlaying)
+        player.start()
 
         binding.songBtnDownIv.setOnClickListener {
             finish()
@@ -42,9 +44,11 @@ class SongActivity : AppCompatActivity() {
         }
 
         binding.songBtnPlayIv.setOnClickListener {
+            player.isPlaying = true
             setPlayerStatus(true)
         }
         binding.songBtnPauseIv.setOnClickListener {
+            player.isPlaying = false
             setPlayerStatus(false)
         }
 
@@ -62,6 +66,22 @@ class SongActivity : AppCompatActivity() {
         }
         binding.songBtnRandom2Iv.setOnClickListener {
             setRandomStatus(false)
+        }
+    }
+
+    private fun initSong() {
+        if(intent.hasExtra("title") && intent.hasExtra("singer") && intent.hasExtra("playTime")) {
+            //song 전역변수에 intent 값 가져온거 넣기
+            song.title = intent.getStringExtra("title")!!
+            song.singer = intent.getStringExtra("singer")!!
+            song.playTime = intent.getIntExtra("playTime", 0)
+            song.isPlaying = intent.getBooleanExtra("isPlaying", false)
+
+            //뷰에 렌더링
+            binding.songTitleTv.text = song.title
+            binding.songSingerTv.text = song.singer
+            binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime/60, song.playTime%60)
+            setPlayerStatus(song.isPlaying)
         }
     }
 
@@ -88,11 +108,6 @@ class SongActivity : AppCompatActivity() {
     }
 
     private fun setPlayerStatus(isPlaying : Boolean) {
-        val spf : SharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = spf.edit()
-        editor.putBoolean("isPlaying", isPlaying)
-        editor.apply()
-
         if(isPlaying) {
             binding.songBtnPlayIv.visibility = View.GONE
             binding.songBtnPauseIv.visibility = View.VISIBLE
@@ -141,5 +156,36 @@ class SongActivity : AppCompatActivity() {
 
     private fun putPlayStatus(isPlaying : Boolean) {
         intent.putExtra("isPlaying", isPlaying)
+    }
+
+    inner class Player(private val playTime : Int, var isPlaying : Boolean) : Thread() {
+        private var second = 0
+
+        override fun run() { //run 코드가 끝나면 쓰레드도 종료
+            try {
+                while(true) {
+                    if(second >= playTime) {
+                        break
+                    }
+
+                    if(isPlaying) {
+                        sleep(1000)
+                        second++
+
+                        runOnUiThread { //handler를 쓰는 방법도 있음
+                            binding.songPlayerSb.progress = second*1000/playTime
+                            binding.songStartTimeTv.text = String.format("%02d:%02d", second/60, second%60)
+                        }
+                    }
+                }
+            }catch (e:InterruptedException){
+                Log.d("interrupt", "쓰레드가 종료되었습니다.")
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        player.interrupt() //쓰레드 종료
+        super.onDestroy()
     }
 }
