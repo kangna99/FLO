@@ -26,12 +26,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("생명주기", "main onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 215, getPlayStatus())
+
         val song = Song("라일락", "아이유(IU)", 215, false, "lilac_iu", 0)
-        Log.d("Log test", song.title + song.singer + song.playTime + song.isPlaying)
+//        Log.d("Log test", song.title + song.singer + song.playTime + song.isPlaying)
 
         initNavigation()
         setMiniPlayer(song)
@@ -101,14 +103,35 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE) //MODE_PRIVATE : 이 앱에서만 이 sharedPreferences에 접근 가능하다
+        Log.d("생명주기", "main onStart")
+
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE) //MODE_PRIVATE : 이 앱에서만 이 sharedPreferences에 접근 가능하다.
         val jsonSong = sharedPreferences.getString("song", null)
-        song = if(jsonSong == null) {
+
+        song = if(jsonSong == null) { //가장 처음에만 실행
             Song("라일락", "아이유(IU)", 215, false, "lilac_iu", 0)
         } else {
             gson.fromJson(jsonSong, Song::class.java) //Json -> 객체로 포맷 변환
         }
         setMiniPlayer(song)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("생명주기", "main onPause")
+
+        song.second = (binding.mainPlayerSb.progress * song.playTime) / 1000
+        Log.d("생명주기", "초 : " + song.second)
+
+        //sharedPreferences : 액티비티가 pause 될 때 sharedPreferences에 song 객체 정보를 전부 전달
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val editor = sharedPreferences.edit() //sharedPreferences 조작할 때 사용
+
+        //Gson : 객체 <-> Json의 역할을 함
+        val json = gson.toJson(song) //gson을 json으로 변환
+        editor.putString("song", json) //Json 객체를 통째로 sharedPreferences에 넘겨준 것
+
+        editor.apply()
     }
 
 
@@ -120,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         //mediaPlayer에 음악 연동
         val music = resources.getIdentifier(song.music,"raw", this.packageName)
-        mediaPlayer = MediaPlayer.create(this, music)
+//        mediaPlayer = MediaPlayer.create(this, music)
     }
 
     private fun setPlayerStatus(isPlaying: Boolean) {

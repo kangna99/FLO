@@ -19,7 +19,7 @@ class SongActivity : AppCompatActivity() {
     lateinit var binding : ActivitySongBinding
     private lateinit var player : Player
     //    private val handler = Handler(Looper.getMainLooper())
-    private val song : Song = Song()
+    private var song : Song = Song()
     //미디어 플레이어
     private var mediaPlayer : MediaPlayer? = null // ?을 붙여 nullable(null 값이 들어올 수 있음) 선언
     //Gson
@@ -27,32 +27,54 @@ class SongActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("생명주기", "song onCreate")
         binding = ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initSong()
-        setBtnIcon()
+    }
 
-        player = Player(song.playTime, song.isPlaying)
-        player.start()
+    override fun onStart() {
+        super.onStart()
+        Log.d("생명주기", "song onStart")
 
-        binding.songBtnDownIv.setOnClickListener {
-            finish()
-        }
 
-        binding.songBtnPlayIv.setOnClickListener {
-            setPlayerStatus(true)
-            player.isPlaying = true
-            song.isPlaying = true
-            mediaPlayer?.start() //nullable로 선언한 변수는 함수 사용 시에도 ?를 붙여야 함.
-        }
-        binding.songBtnPauseIv.setOnClickListener {
-            setPlayerStatus(false)
-            player.isPlaying = false
-            song.isPlaying = false
-            mediaPlayer?.pause() //nullable로 선언한 변수는 함수 사용 시에도 ?를 붙여야 함.
+        setButton()
 
-        }
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE) //MODE_PRIVATE : 이 앱에서만 이 sharedPreferences에 접근 가능하다.
+        val jsonSong = sharedPreferences.getString("song", null)
+
+        song = gson.fromJson(jsonSong, Song::class.java) //Json -> 객체로 포맷 변환
+
+        player = Player(song.playTime, song.isPlaying, song.second)
+        mediaPlayer?.seekTo(song.second*1000)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("생명주기", "song onPause")
+        mediaPlayer?.pause() //미디어 플레이어 중지
+        player.isPlaying = false //스레드 중지
+        song.isPlaying = false
+        song.second = (binding.songPlayerSb.progress * song.playTime) / 1000
+        setPlayerStatus(false) //일시정지 상태일 때의 이미지로 전환
+
+        //sharedPreferences : 액티비티가 pause 될 때 sharedPreferences에 song 객체 정보를 전부 전달
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val editor = sharedPreferences.edit() //sharedPreferences 조작할 때 사용
+
+        //Gson : 객체 <-> Json의 역할을 함
+        val json = gson.toJson(song) //gson을 json으로 변환
+        editor.putString("song", json) //Json 객체를 통째로 sharedPreferences에 넘겨준 것
+
+        editor.apply()
+    }
+
+    override fun onDestroy() { //필요없는 리소스 해제
+        super.onDestroy()
+        Log.d("생명주기", "song onDestroy")
+        player.interrupt() //스레드 종료
+        mediaPlayer?.release() //미디어 플레이어가 갖고 있던 리소스 해제
+        mediaPlayer = null // 미디어 플레이어 해제
     }
 
     private fun initSong() {
@@ -71,6 +93,7 @@ class SongActivity : AppCompatActivity() {
             binding.songTitleTv.text = song.title
             binding.songSingerTv.text = song.singer
             binding.songEndTimeTv.text = String.format("%02d:%02d", song.playTime/60, song.playTime%60)
+            binding.songPlayerSb.progress = song.second*1000/song.playTime
             setPlayerStatus(song.isPlaying)
 
             //mediaPlayer에 음악 연동
@@ -78,7 +101,27 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
-    private fun setBtnIcon() {
+    private fun setButton() {
+
+        //SongActivity 종료
+        binding.songBtnDownIv.setOnClickListener {
+            finish()
+        }
+
+        binding.songBtnPlayIv.setOnClickListener {
+            setPlayerStatus(true)
+            player.isPlaying = true
+            song.isPlaying = true
+            mediaPlayer?.start() //nullable로 선언한 변수는 함수 사용 시에도 ?를 붙여야 함.
+        }
+        binding.songBtnPauseIv.setOnClickListener {
+            setPlayerStatus(false)
+            player.isPlaying = false
+            song.isPlaying = false
+            mediaPlayer?.pause() //nullable로 선언한 변수는 함수 사용 시에도 ?를 붙여야 함.
+        }
+
+        //좋아요
         binding.songBtnLike1Iv.setOnClickListener {
             setLikeStatus(true)
         }
@@ -91,6 +134,8 @@ class SongActivity : AppCompatActivity() {
         binding.songBtnUnlike2Iv.setOnClickListener {
             setUnlikeStatus(false)
         }
+
+        //반복재생
         binding.songBtnRepeat1Iv.setOnClickListener {
             setRepeatStatus(1)
         }
@@ -100,6 +145,8 @@ class SongActivity : AppCompatActivity() {
         binding.songBtnRepeat3Iv.setOnClickListener {
             setRepeatStatus(3)
         }
+
+        //랜덤재생
         binding.songBtnRandom1Iv.setOnClickListener {
             setRandomStatus(true)
         }
@@ -181,31 +228,33 @@ class SongActivity : AppCompatActivity() {
         intent.putExtra("isPlaying", isPlaying)
     }
 
-    inner class Player(private val playTime : Int, var isPlaying : Boolean) : Thread() {
-        private var second = 0
+    inner class Player(private val playTime : Int, var isPlaying : Boolean, private var second : Int) : Thread() {
+//        private var second = 0
 
         override fun run() { //run 코드가 끝나면 쓰레드도 종료
             try {
                 while(true) {
-                    if(second >= playTime) {
+                    if(second >= playTime) { //노래가 끝까지 재생
                         break
                     }
 
                     if(isPlaying) {
-//                        binding.songPlayerSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-//                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//                                TODO("Not yet implemented")
-//                            }
-//
-//                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//                                TODO("Not yet implemented")
-//                            }
-//
-//                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//                                TODO("Not yet implemented")
-//                            }
-//
-//                        })
+                        binding.songPlayerSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+//                                Log.d("progress", "onProgressChanged")
+                            }
+
+                            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                                Log.d("progress", "onStartTrackingTouch")
+                            }
+
+                            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                                song.second = seekBar!!.progress * song.playTime / 1000
+                                binding.songPlayerSb.progress = second*1000/playTime
+                                Log.d("progress", "onStopTrackingTouch")
+                            }
+                        })
+
                         sleep(1000)
                         second++
 
@@ -221,29 +270,5 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        mediaPlayer?.pause() //미디어 플레이어 중지
-        player.isPlaying = false //스레드 중지
-        song.isPlaying = false
-        song.second = (binding.songPlayerSb.progress * song.playTime) / 1000
-        setPlayerStatus(false) //일시정지 상태일 때의 이미지로 전환
 
-        //sharedPreferences : 액티비티가 pause 될 때 sharedPreferences에 song 객체 정보를 전부 전달
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val editor = sharedPreferences.edit() //sharedPreferences 조작할 때 사용
-
-        //Gson : 객체 <-> Json의 역할을 함
-        val json = gson.toJson(song) //gson을 json으로 변환
-        editor.putString("song", json) //Json 객체를 통째로 sharedPreferences에 넘겨준 것
-
-        editor.apply()
-    }
-
-    override fun onDestroy() { //필요없는 리소스 해제
-        super.onDestroy()
-        player.interrupt() //스레드 종료
-        mediaPlayer?.release() //미디어 플레이어가 갖고 있던 리소스 해제
-        mediaPlayer = null // 미디어 플레이어 해제
-    }
 }

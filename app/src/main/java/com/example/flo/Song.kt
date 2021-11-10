@@ -7,5 +7,4 @@ data class Song(
     var isPlaying : Boolean = false, //현재 재생 유무
     var music : String = "", //현재 재생 음악
     var second : Int = 0 //현재 재생 시간
-
 )
