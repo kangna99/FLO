@@ -1,16 +1,18 @@
 package com.example.flo
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemSongBinding
 
-class SongRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
+class SongRVAdapter() : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
+    private val songs = ArrayList<Song>()
 
     //클릭 인터페이스 정의
     interface MyItemClickListener{
-        fun onItemClick(album : Album)
-        fun onRemoveAlbum(position : Int)
+        fun onItemClick(song : Song)
+        fun onRemoveSong(songId : Int)
     }
 
     //리스너 객체를 전달받는 함수랑 리스너 객체를 저장할 변수
@@ -29,31 +31,37 @@ class SongRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ada
 
     //뷰홀더에 데이터를 바인딩해줘야 할 때마다 호출되는 함수 => 엄청나게 많이 호출
     override fun onBindViewHolder(holder: SongRVAdapter.ViewHolder, position: Int) {
-        holder.bind(albumList[position])
-        holder.itemView.setOnClickListener { mItemClickListener.onItemClick(albumList[position]) }
-        holder.binding.itemSongMoreIv.setOnClickListener{ mItemClickListener.onRemoveAlbum(position)}
-    }
-
-    //데이터 세트 크기를 알려주는 함수 => 리사이클러뷰가 마지막이 언제인지를 알게 된다.
-    override fun getItemCount(): Int = albumList.size
-
-    //뷰홀더
-    inner class ViewHolder(val binding: ItemSongBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: Album) {
-            binding.itemSongTitleTv.text = album.title
-            binding.itemSongSingerTv.text = album.singer
-            binding.itemSongCoverImgIv.setImageResource(album.coverImg!!)
+        holder.bind(songs[position])
+        holder.itemView.setOnClickListener { mItemClickListener.onItemClick(songs[position]) }
+        holder.binding.itemSongMoreIv.setOnClickListener{
+            mItemClickListener.onRemoveSong(songs[position].id)
+            removeSong(position)
         }
     }
 
-    fun addItem(album: Album) {
-        albumList.add(album)
+    //데이터 세트 크기를 알려주는 함수 => 리사이클러뷰가 마지막이 언제인지를 알게 된다.
+    override fun getItemCount(): Int = songs.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addSongs(songs: ArrayList<Song>) {
+        this.songs.clear()
+        this.songs.addAll(songs)
+
         notifyDataSetChanged()
     }
 
-    fun removeItem(position: Int) {
-        albumList.removeAt(position)
+    fun removeSong(position: Int){
+        songs.removeAt(position)
         notifyDataSetChanged()
+    }
+
+    //뷰홀더
+    inner class ViewHolder(val binding: ItemSongBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(song: Song) {
+            binding.itemSongTitleTv.text = song.title
+            binding.itemSongSingerTv.text = song.singer
+            binding.itemSongCoverImgIv.setImageResource(song.coverImg!!)
+        }
     }
 
 }

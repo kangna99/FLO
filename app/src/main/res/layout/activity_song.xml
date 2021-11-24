@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="@id/song_singer_tv" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/song_album_iv"
+        android:id="@+id/song_album_cv"
         android:layout_width="290dp"
         android:layout_height="290dp"
         android:layout_marginTop="20dp"
@@ -90,6 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/song_singer_tv">
 
         <ImageView
+            android:id="@+id/song_album_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
@@ -107,10 +108,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/song_album_iv" />
+        app:layout_constraintTop_toBottomOf="@id/song_album_cv" />
 
     <ImageView
-        android:id="@+id/song_btn_like1_iv"
+        android:id="@+id/song_btn_like_iv"
         android:layout_width="37dp"
         android:layout_height="37dp"
         android:layout_marginStart="7dp"
@@ -118,16 +119,6 @@
         android:src="@drawable/ic_my_like_off"
         app:layout_constraintStart_toStartOf="@id/song_lyrics_tv"
         app:layout_constraintTop_toBottomOf="@id/song_lyrics_tv" />
-    <ImageView
-        android:id="@+id/song_btn_like2_iv"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_my_like_on"
-        app:layout_constraintStart_toStartOf="@id/song_lyrics_tv"
-        app:layout_constraintTop_toBottomOf="@id/song_lyrics_tv"
-        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/song_btn_unlike1_iv"
