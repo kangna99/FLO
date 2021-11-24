@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemAlbumBinding
+import com.example.flo.db.Album
 
 class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Adapter<AlbumRVAdapter.ViewHolder>() {
 
@@ -46,8 +47,19 @@ class AlbumRVAdapter(private val albumList : ArrayList<Album>) : RecyclerView.Ad
         }
     }
 
+    fun addItems(albums: ArrayList<Album>) {
+        albumList.clear()
+        albumList.addAll(albums)
+        notifyDataSetChanged()
+    }
+
     fun addItem(album: Album) {
         albumList.add(album)
+        notifyDataSetChanged()
+    }
+
+    fun removeItems() {
+        albumList.clear()
         notifyDataSetChanged()
     }
 

@@ -125,7 +125,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_today_rv"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="230dp"
             android:layout_marginTop="10dp"
             tools:listitem="@layout/item_album"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

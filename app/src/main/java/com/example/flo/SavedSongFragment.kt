@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.flo.databinding.FragmentSaveBinding
+import com.example.flo.databinding.FragmentSavedSongBinding
+import com.example.flo.db.Song
+import com.example.flo.db.SongDatabase
 import com.google.gson.Gson
 
-class SaveFragment : Fragment() {
+class SavedSongFragment : Fragment() {
 
-    lateinit var binding: FragmentSaveBinding
+    lateinit var binding: FragmentSavedSongBinding
     lateinit var songDB: SongDatabase
 
     override fun onCreateView(
@@ -19,7 +21,7 @@ class SaveFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSaveBinding.inflate(inflater, container, false)
+        binding = FragmentSavedSongBinding.inflate(inflater, container, false)
         songDB = SongDatabase.getInstance(requireContext())!!
 
         return binding.root

@@ -12,6 +12,9 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.flo.databinding.ActivityMainBinding
+import com.example.flo.db.Album
+import com.example.flo.db.Song
+import com.example.flo.db.SongDatabase
 import com.google.gson.Gson
 
 
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
         initNavigation() //Fragment 변경, 하단메뉴
+        inputDummyAlbums()
         inputDummySongs()
 
 //        player = Player(song.playTime, song.isPlaying)
@@ -227,6 +231,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     //RoomDB
+    private fun inputDummyAlbums() {
+        val songDB = SongDatabase.getInstance(this)!!
+        val albums = songDB.albumDao().getAlbums()
+
+        if (albums.isNotEmpty()) return
+
+        songDB.albumDao().insert(
+            Album(
+                1,
+                "IU 5th Album 'LILAC'", "아이유 (IU)", R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                2,
+                "Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                3,
+                "Next Level", "aespa", R.drawable.img_album_exp3
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                4,
+                "신호등", "이무진", R.drawable.img_album_exp4
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                5,
+                "정규 2집 '마음, 하나'", "폴킴", R.drawable.img_album_exp5
+            )
+        )
+    }
     private fun inputDummySongs() {
         Log.d("dummy", "들어옴")
         songDB = SongDatabase.getInstance(this)!!
@@ -244,7 +289,8 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp2,
-                false
+                false,
+                1
             )
         )
 
@@ -258,7 +304,8 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp2,
-                false
+                false,
+                1
             )
         )
 
@@ -271,7 +318,8 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp,
-                false
+                false,
+                2
             )
         )
 
@@ -285,6 +333,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 R.drawable.img_album_exp3,
                 false,
+                3
             )
         )
 
@@ -297,7 +346,8 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp4,
-                false
+                false,
+                4
             )
         )
 
@@ -310,7 +360,8 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp5,
-                false
+                false,
+                5
             )
         )
 

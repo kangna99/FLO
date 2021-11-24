@@ -36,20 +36,20 @@
 
     <TextView
         android:id="@+id/item_album_title_tv"
-        app:layout_constraintStart_toStartOf="@id/item_album_coverImg_cv"
-        app:layout_constraintTop_toBottomOf="@id/item_album_coverImg_cv"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="LILAC"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/item_album_coverImg_cv"
+        app:layout_constraintTop_toBottomOf="@id/item_album_coverImg_cv"/>
 
     <TextView
         android:id="@+id/item_album_singer_tv"
         app:layout_constraintStart_toStartOf="@id/item_album_coverImg_cv"
         app:layout_constraintTop_toBottomOf="@id/item_album_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="아이유(IU)"
         android:textSize="15sp" />

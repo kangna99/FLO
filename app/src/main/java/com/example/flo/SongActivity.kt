@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.flo.databinding.ActivitySongBinding
+import com.example.flo.db.Song
+import com.example.flo.db.SongDatabase
 import com.google.gson.Gson
 
 

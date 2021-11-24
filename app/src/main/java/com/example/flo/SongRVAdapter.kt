@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemSongBinding
+import com.example.flo.db.Song
 
 class SongRVAdapter() : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
     private val songs = ArrayList<Song>()

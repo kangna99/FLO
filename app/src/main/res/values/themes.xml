@@ -19,7 +19,7 @@
 
         //status bar, navigation 반투명하게
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
 
 <!--        <item name="android:windowFullscreen">true</item>-->
     </style>

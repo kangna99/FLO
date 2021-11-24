@@ -10,12 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.flo.databinding.FragmentHomeBinding
+import com.example.flo.db.Album
+import com.example.flo.db.SongDatabase
 import com.google.gson.Gson
 
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
-    private var albumDatas = ArrayList<Album>();
+    private var albums = ArrayList<Album>();
+
+    private lateinit var songDB: SongDatabase
 
     var currentPage = 0
     private val handler = Handler(Looper.getMainLooper()) {
@@ -38,20 +42,17 @@ class HomeFragment : Fragment() {
 //                .commitAllowingStateLoss()
 //        }
 
-        //데이터 리스트 생성 더미 데이터
-        albumDatas.apply {
-            add(Album("Butter", "방탄소년단(BTS)", R.drawable.img_album_exp))
-            add(Album("Lilac", "아이유(IU)", R.drawable.img_album_exp2))
-            add(Album("Next Level", "에스파(AESPA)", R.drawable.img_album_exp3))
-            add(Album("신호등", "이무진", R.drawable.img_album_exp4))
-            add(Album("New Day", "폴킴", R.drawable.img_album_exp5))
-        }
+        //ROOM_DB
+        songDB = SongDatabase.getInstance(requireContext())!!
+        albums.addAll(songDB.albumDao().getAlbums()) // songDB에서 album list를 가져옵니다.
+
+        //레이아웃 매니저 설정
+        binding.homeTodayRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         //더미데이터랑 Adapter 연결
-        val albumRVAdapter = AlbumRVAdapter(albumDatas)
-        //리사이클러뷰에 어댑터를 연결
-        binding.homeTodayRv.adapter = albumRVAdapter
+        val albumRVAdapter = AlbumRVAdapter(albums)
 
+        //리스너 객체 생성 및 전달
         albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener {
 
             override fun onItemClick(album: Album) {
@@ -62,9 +63,9 @@ class HomeFragment : Fragment() {
                 albumRVAdapter.removeItem(position)
             }
         })
-        //레이아웃 매니저 설정
-        binding.homeTodayRv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        //리사이클러뷰에 어댑터를 연결
+        binding.homeTodayRv.adapter = albumRVAdapter
 
 
         //배너(banner)

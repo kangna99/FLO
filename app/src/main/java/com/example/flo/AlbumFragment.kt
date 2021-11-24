@@ -7,27 +7,70 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.flo.databinding.FragmentAlbumBinding
+import com.example.flo.db.Album
+import com.example.flo.db.Like
+import com.example.flo.db.Song
+import com.example.flo.db.SongDatabase
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 
 class AlbumFragment : Fragment() {
 
     lateinit var binding: FragmentAlbumBinding
-    private var gson : Gson = Gson()
+    private var gson: Gson = Gson()
 
     val menu = arrayListOf("수록곡", "상세정보", "영상")
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private var isLiked: Boolean = false // 앨범 좋아요
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = FragmentAlbumBinding.inflate(inflater, container, false)
 
         //Home에서 넘어온 데이터 받아오기
         val albumData = arguments?.getString("album")
         val album = gson.fromJson(albumData, Album::class.java)
+        isLiked = isLikedAlbum(album.id)
+
         //Home에서 넘어온 데이터를 뷰에 반영
-        setInit(album)
+        setViews(album)
+        setClickListeners(album)
+
+        //ROOM_DB
+        val songs = getSongs(album.id) //앨범안에 있는 수록곡들을 불러옵니다.
+        // 이 다음에 수록곡 프래그먼트에 songs을 전달해주는 식으로 사용하시면 됩니다.
+
+        //init viewpager
+        val albumAdapter = AlbumViewpagerAdapter(this)
+        binding.albumContentVp.adapter = albumAdapter
+
+        TabLayoutMediator(binding.albumMenuTl, binding.albumContentVp) { tab, position ->
+            tab.text = menu[position]
+        }.attach()
+
+        return binding.root
+    }
+
+    private fun setViews(album: Album) {
+        binding.albumAlbumIv.setImageResource(album.coverImg!!)
+        binding.albumTitleTv.text = album.title.toString()
+        binding.albumSingerTv.text = album.singer.toString()
+
+        if (isLiked) { //앨범 좋아요
+            binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_on)
+        } else {
+            binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_off)
+        }
+    }
+
+    private fun setClickListeners(album: Album) {
 
         binding.albumBtnBackIv.setOnClickListener {
             //context~: fragment를 어디서 변경하는지
@@ -36,19 +79,16 @@ class AlbumFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        val albumAdapter = AlbumViewpagerAdapter(this)
-        binding.albumContentVp.adapter = albumAdapter
+        val userId = getJwt()
 
-        TabLayoutMediator(binding.albumMenuTl, binding.albumContentVp) {
-            tab,position ->
-            tab.text = menu[position]
-        }.attach()
-
-        binding.albumBtnLike1Iv.setOnClickListener {
-            setLikeStatus(true)
-        }
-        binding.albumBtnLike2Iv.setOnClickListener {
-            setLikeStatus(false)
+        binding.albumBtnLikeIv.setOnClickListener {
+            if (isLiked) { //좋아요 -> 좋아요 취소
+                binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_off)
+                disLikeAlbum(userId, album.id)
+            } else { //좋아요 취소 -> 좋아요
+                binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_on)
+                likeAlbum(userId, album.id)
+            }
         }
 
 //        binding.albumMenu1Cl.setOnClickListener {
@@ -75,24 +115,43 @@ class AlbumFragment : Fragment() {
 //        binding.albumBtnPlayAllCl.setOnClickListener {
 //            Toast.makeText(activity, "플레이리스트가 재생목록에 담겼습니다. 중복곡은 제외됩니다.", Toast.LENGTH_SHORT).show()
 //        }
-
-        return binding.root
     }
 
-    private fun setInit(album: Album) {
-        binding.albumAlbumIv.setImageResource(album.coverImg!!)
-        binding.albumTitleTv.text = album.title.toString()
-        binding.albumSingerTv.text = album.singer.toString()
+    private fun getJwt(): Int {
+        //fragment에서 sharedPreferences 사용하기
+        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+
+        return spf!!.getInt("jwt", 0)
     }
 
-    private fun setLikeStatus(Like: Boolean) {
-        if (Like) {
-            binding.albumBtnLike1Iv.visibility = View.GONE
-            binding.albumBtnLike2Iv.visibility = View.VISIBLE
-        } else {
-            binding.albumBtnLike1Iv.visibility = View.VISIBLE
-            binding.albumBtnLike2Iv.visibility = View.GONE
-        }
+    private fun likeAlbum(userId: Int, albumId: Int) {
+        val songDB = SongDatabase.getInstance(requireContext())!! //fragment에서는 이렇게 씀
+        val like = Like(userId, albumId)
+
+        songDB.albumDao().likeAlbum(like)
+    }
+
+    private fun isLikedAlbum(albumId: Int): Boolean { //좋아요가 눌려있는지 안눌려있는지 확인하는 함수
+        val songDB = SongDatabase.getInstance(requireContext())!!
+        val userId = getJwt()
+
+        val likeId: Int? = songDB.albumDao().isLikeAlbum(userId, albumId)
+
+        return likeId != null
+    }
+
+    private fun disLikeAlbum(userId: Int, albumId: Int) { //좋아요 지우는 함수
+        val songDB = SongDatabase.getInstance(requireContext())!!
+        songDB.albumDao().disLikeAlbum(userId, albumId)
+    }
+
+    //ROOM_DB
+    private fun getSongs(albumIdx: Int): ArrayList<Song> {
+        val songDB = SongDatabase.getInstance(requireContext())!!
+
+        val songs = songDB.SongDao().getSongsInAlbum(albumIdx) as ArrayList
+
+        return songs
     }
 
 //    private fun selectMenu(menu: Int) {

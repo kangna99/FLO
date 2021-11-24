@@ -1,4 +1,4 @@
-package com.example.flo
+package com.example.flo.db
 
 import androidx.room.*
 
@@ -25,6 +25,6 @@ interface SongDao {
     @Query("SELECT * FROM SongTable WHERE isLike = :isLike") //id에 해당하는 특정 song 객체로 가져오기
     fun getLikedSongs(isLike: Boolean): List<Song>
 
-    @Query("UPDATE SongTable SET second= :second WHERE id = :id")
-    fun updateSecondById(second: Int, id: Int)
+    @Query("SELECT * FROM SongTable WHERE albumIdx = :albumIdx")
+    fun getSongsInAlbum(albumIdx: Int): List<Song>
 }

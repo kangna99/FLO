@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/locker_login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그인"
@@ -31,7 +33,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/locker_menu_tl"
-        android:layout_width="230dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabIndicatorFullWidth="false"
