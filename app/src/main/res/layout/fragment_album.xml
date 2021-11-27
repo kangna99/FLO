@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -56,7 +56,7 @@
             android:layout_marginTop="10dp"
             android:text="IU 5th Album 'LILAC'"
             android:textColor="@color/black"
-            android:textSize="23sp"
+            android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/album_title_tv" />
+            app:layout_constraintTop_toBottomOf="@id/album_title_tv"
+            app:layout_constraintBottom_toTopOf="@id/album_info_ll"/>
 
         <LinearLayout
             android:id="@+id/album_info_ll"
@@ -87,8 +88,8 @@
                 android:id="@+id/album_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2021.03.25"
-                android:textSize="18sp" />
+                tools:text="2021.03.25"
+                android:textSize="17sp" />
 
             <View
                 android:layout_width="2dp"
@@ -103,8 +104,8 @@
                 android:id="@+id/album_type_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="정규"
-                android:textSize="18sp" />
+                tools:text="정규"
+                android:textSize="17sp" />
 
             <View
                 android:layout_width="2dp"
@@ -119,8 +120,8 @@
                 android:id="@+id/album_genre_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="댄스 팝"
-                android:textSize="18sp" />
+                tools:text="댄스 팝"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

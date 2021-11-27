@@ -30,4 +30,5 @@ interface AlbumDao {
 
     @Query("SELECT AT.* FROM LikeTable as LT LEFT JOIN AlbumTable as AT ON LT.albumId = AT.id WHERE LT.userId =:userId")
     fun getLikedAlbums(userId: Int): List<Album>
+
 }

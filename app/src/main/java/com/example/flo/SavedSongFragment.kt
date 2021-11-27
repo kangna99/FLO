@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flo.databinding.FragmentSavedSongBinding
 import com.example.flo.db.Song
 import com.example.flo.db.SongDatabase
-import com.google.gson.Gson
 
 class SavedSongFragment : Fragment() {
 
@@ -37,12 +36,12 @@ class SavedSongFragment : Fragment() {
         binding.saveSongRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         //더미데이터랑 Adapter 연결
-        val songRVAdapter = SongRVAdapter()
+        val songRVAdapter = SongLockerRVAdapter()
 
         //리사이클러뷰에 어댑터를 연결
         binding.saveSongRv.adapter = songRVAdapter
 
-        songRVAdapter.setMyItemClickListener(object : SongRVAdapter.MyItemClickListener {
+        songRVAdapter.setMyItemClickListener(object : SongLockerRVAdapter.MyItemClickListener {
             override fun onItemClick(song: Song) {
 
             }

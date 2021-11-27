@@ -35,12 +35,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-//        binding.homeWidget1AlbumIv.setOnClickListener {
-//            //context~: fragment를 어디서 변경하는지
-//            (context as MainActivity).supportFragmentManager.beginTransaction()
-//                .replace(R.id.main_frm, AlbumFragment())
-//                .commitAllowingStateLoss()
-//        }
 
         //ROOM_DB
         songDB = SongDatabase.getInstance(requireContext())!!
@@ -56,7 +50,7 @@ class HomeFragment : Fragment() {
         albumRVAdapter.setMyItemClickListener(object : AlbumRVAdapter.MyItemClickListener {
 
             override fun onItemClick(album: Album) {
-                changeAlbumFragment(album)
+                startAlbumFragment(album)
             }
 
             override fun onRemoveAlbum(position: Int) {
@@ -101,7 +95,7 @@ class HomeFragment : Fragment() {
 //        super.onPause()
 //    }
 
-    private fun changeAlbumFragment(album: Album) {
+    private fun startAlbumFragment(album: Album) {
         (context as MainActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.main_frm, AlbumFragment().apply {
                 arguments = Bundle().apply {

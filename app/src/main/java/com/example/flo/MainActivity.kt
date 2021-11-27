@@ -240,35 +240,60 @@ class MainActivity : AppCompatActivity() {
         songDB.albumDao().insert(
             Album(
                 1,
-                "IU 5th Album 'LILAC'", "아이유 (IU)", R.drawable.img_album_exp2
+                "IU 5th Album 'LILAC'",
+                "아이유 (IU)",
+                "2021.03.25",
+                "정규",
+                "댄스 팝",
+                R.drawable.img_album_exp2
             )
         )
 
         songDB.albumDao().insert(
             Album(
                 2,
-                "Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp
+                "Butter",
+                "방탄소년단 (BTS)",
+                "2021.05.21",
+                "싱글",
+                "댄스",
+                R.drawable.img_album_exp
             )
         )
 
         songDB.albumDao().insert(
             Album(
                 3,
-                "Next Level", "aespa", R.drawable.img_album_exp3
+                "Next Level",
+                "aespa",
+                "2021.05.17",
+                "싱글",
+                "댄스 팝",
+                R.drawable.img_album_exp3
             )
         )
 
         songDB.albumDao().insert(
             Album(
                 4,
-                "신호등", "이무진", R.drawable.img_album_exp4
+                "신호등",
+                "이무진",
+                "2021.05.14",
+                "싱글",
+                "락",
+                R.drawable.img_album_exp4
             )
         )
 
         songDB.albumDao().insert(
             Album(
                 5,
-                "정규 2집 '마음, 하나'", "폴킴", R.drawable.img_album_exp5
+                "정규 2집 '마음, 하나'",
+                "폴킴",
+                "2019.10.07",
+                "미니",
+                "알앤비, 발라드",
+                R.drawable.img_album_exp5
             )
         )
     }
@@ -290,6 +315,7 @@ class MainActivity : AppCompatActivity() {
                 0,
                 R.drawable.img_album_exp2,
                 false,
+                1,
                 1
             )
         )
@@ -305,7 +331,9 @@ class MainActivity : AppCompatActivity() {
                 0,
                 R.drawable.img_album_exp2,
                 false,
-                1
+                1,
+                2,
+                false
             )
         )
 

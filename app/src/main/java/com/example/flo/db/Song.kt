@@ -13,7 +13,9 @@ data class Song(
     var second : Int = 0, //현재 재생 시간
     var coverImg: Int? = null, //커버이미지
     var isLike: Boolean = false, //좋아요
-    var albumIdx: Int = 0 // 이 song이 어떤 앨범에 담겨 있는지 가리키는 변수 (foreign key 역할)
+    var albumIdx: Int = 0, // 이 song이 어떤 앨범에 담겨 있는지 가리키는 변수 (foreign key 역할)
+    var songIdx: Int = 1,
+    var isTitle: Boolean = true,
 ) {
     @PrimaryKey(autoGenerate = true) var id : Int = 0
 }

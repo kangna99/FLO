@@ -48,7 +48,7 @@ class AlbumFragment : Fragment() {
         // 이 다음에 수록곡 프래그먼트에 songs을 전달해주는 식으로 사용하시면 됩니다.
 
         //init viewpager
-        val albumAdapter = AlbumViewpagerAdapter(this)
+        val albumAdapter = AlbumViewpagerAdapter(this, album.id)
         binding.albumContentVp.adapter = albumAdapter
 
         TabLayoutMediator(binding.albumMenuTl, binding.albumContentVp) { tab, position ->
@@ -62,6 +62,9 @@ class AlbumFragment : Fragment() {
         binding.albumAlbumIv.setImageResource(album.coverImg!!)
         binding.albumTitleTv.text = album.title.toString()
         binding.albumSingerTv.text = album.singer.toString()
+        binding.albumDateTv.text = album.date
+        binding.albumTypeTv.text = album.type
+        binding.albumGenreTv.text = album.genre
 
         if (isLiked) { //앨범 좋아요
             binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_on)
