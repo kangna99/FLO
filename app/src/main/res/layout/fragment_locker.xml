@@ -20,6 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/locker_nickname_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="닉네임"
+        android:textSize="18sp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toStartOf="@id/locker_login_tv"
+        app:layout_constraintTop_toTopOf="@id/locker_title_tv"
+        app:layout_constraintBottom_toBottomOf="@id/locker_title_tv"/>
+
+    <TextView
         android:id="@+id/locker_login_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

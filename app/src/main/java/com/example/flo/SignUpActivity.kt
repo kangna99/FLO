@@ -29,10 +29,11 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun getUser(): User {
+        val nickname: String = binding.signupNicknameEt.text.toString()
         val email: String = binding.signupIdEt.text.toString() + "@" + binding.signupEmailEt.text.toString()
         val password: String = binding.signupPasswordEt.text.toString()
 
-        return User(email, password)
+        return User(nickname, email, password)
     }
 
     //회원가입 진행 함수

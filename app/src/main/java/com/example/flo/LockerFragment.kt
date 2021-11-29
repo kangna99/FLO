@@ -8,17 +8,21 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.flo.databinding.FragmentLockerBinding
+import com.example.flo.db.SongDatabase
+import com.example.flo.db.User
 import com.google.android.material.tabs.TabLayoutMediator
 
 
 class LockerFragment : Fragment() {
 
     lateinit var binding: FragmentLockerBinding
+    lateinit var userDB: SongDatabase
 
     val menu = arrayListOf("저장한 곡", "iPod 음악", "저장앨범")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLockerBinding.inflate(inflater, container, false)
+        userDB = SongDatabase.getInstance(requireContext())!!
 
         val lockerAdapter = LockerViewpagerAdapter(this)
         binding.lockerContentVp.adapter = lockerAdapter
@@ -46,6 +50,7 @@ class LockerFragment : Fragment() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         } else { //로그인 된 상태
+            binding.lockerNicknameTv.text = userDB.userDao().getUserNickname(jwt)
             binding.lockerLoginTv.text = "로그아웃"
 
             binding.lockerLoginTv.setOnClickListener {

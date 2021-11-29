@@ -27,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginLoginTv.setOnClickListener {
             login()
-//            startMainActivity()
         }
 
         binding.loginCloseIv.setOnClickListener {

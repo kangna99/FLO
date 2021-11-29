@@ -3,6 +3,7 @@ package com.example.flo
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class AlbumFragment : Fragment() {
         // 이 다음에 수록곡 프래그먼트에 songs을 전달해주는 식으로 사용하시면 됩니다.
 
         //init viewpager
-        val albumAdapter = AlbumViewpagerAdapter(this, album.id)
+        val albumAdapter = AlbumViewpagerAdapter(this, songs)
         binding.albumContentVp.adapter = albumAdapter
 
         TabLayoutMediator(binding.albumMenuTl, binding.albumContentVp) { tab, position ->
@@ -88,9 +89,11 @@ class AlbumFragment : Fragment() {
             if (isLiked) { //좋아요 -> 좋아요 취소
                 binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_off)
                 disLikeAlbum(userId, album.id)
+                isLiked = !isLiked
             } else { //좋아요 취소 -> 좋아요
                 binding.albumBtnLikeIv.setImageResource(R.drawable.ic_my_like_on)
                 likeAlbum(userId, album.id)
+                isLiked = !isLiked
             }
         }
 

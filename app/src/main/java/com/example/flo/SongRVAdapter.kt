@@ -2,6 +2,7 @@ package com.example.flo
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flo.databinding.ItemSongSongBinding
@@ -39,6 +40,10 @@ class SongRVAdapter() : RecyclerView.Adapter<SongRVAdapter.ViewHolder>() {
             binding.itemSongRankTv.text = "0"+song.songIdx.toString()
             binding.itemSongTitleTv.text = song.title
             binding.itemSongSingerTv.text = song.singer
+            if(song.isTitle)
+                binding.itemSongMarkTitleTv.visibility= View.VISIBLE
+            else
+                binding.itemSongMarkTitleTv.visibility= View.GONE
         }
     }
 

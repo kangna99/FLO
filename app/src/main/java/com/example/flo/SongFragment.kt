@@ -10,18 +10,11 @@ import com.example.flo.databinding.FragmentSongBinding
 import com.example.flo.db.Song
 import com.example.flo.db.SongDatabase
 
-class SongFragment() : Fragment() {
+class SongFragment(val songs: ArrayList<Song>) : Fragment() {
 
     lateinit var binding : FragmentSongBinding
     lateinit var songDB: SongDatabase
-    private var albumIdx : Int = 0
 
-    init {
-
-    }
-    constructor(albumIdx: Int): this() {
-        this.albumIdx = albumIdx
-    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSongBinding.inflate(inflater, container, false)
         songDB = SongDatabase.getInstance(requireContext())!!
@@ -32,7 +25,6 @@ class SongFragment() : Fragment() {
     override fun onStart() {
         super.onStart()
         initRecyclerview()
-        setViews()
     }
 
     private fun initRecyclerview() {
@@ -45,12 +37,6 @@ class SongFragment() : Fragment() {
         //리사이클러뷰에 어댑터를 연결
         binding.albumContentTrackRv.adapter = songRVAdapter
 
-
-        songRVAdapter.addSongs(songDB.SongDao().getSongsInAlbum(albumIdx) as ArrayList)
-    }
-
-    private fun setViews() {
-
-
+        songRVAdapter.addSongs(songs)
     }
 }
