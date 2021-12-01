@@ -2,8 +2,7 @@ package com.example.flo
 
 import com.example.flo.db.User
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthRetrofitInterface {
     @POST("/users")
@@ -11,4 +10,7 @@ interface AuthRetrofitInterface {
 
     @POST("/users/login")
     fun login(@Body user: User): Call<AuthResponse>
+
+    @GET("/users/auto-login")
+    fun autoLogin(@Header("jwt") jwt: String): Call<AuthResponse>
 }

@@ -10,6 +10,7 @@ import retrofit2.Response
 class AuthService {
     private lateinit var signUpView: SignUpView
     private lateinit var loginView: LoginView
+    private lateinit var autoLoginView: AutoLoginView
 
     fun setSignUpView(signUpView: SignUpView) {
         this.signUpView = signUpView
@@ -17,6 +18,10 @@ class AuthService {
 
     fun setLoginView(loginView: LoginView) {
         this.loginView = loginView
+    }
+
+    fun setAutoLoginView(autoLoginView: AutoLoginView) {
+        this.autoLoginView = autoLoginView
     }
 
     fun signUp(user: User) {
@@ -55,8 +60,10 @@ class AuthService {
     fun login(user: User) {
         val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
 
+        //호출 전 loading
         loginView.onLoginLoading()
 
+        //api 호출 후 응답받으면 callback
         authService.login(user).enqueue(object : Callback<AuthResponse> {
             @SuppressLint("LongLogTag")
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
@@ -73,9 +80,41 @@ class AuthService {
                 }
             }
 
+            //네트워크 실패
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
                 Log.d("LOGINACT/API_ERROR", t.message.toString())
                 loginView.onLoginFailure(400, t.message.toString())
+            }
+        })
+    }
+
+    fun autoLogin(jwt: String) {
+        val authService = getRetrofit().create(AuthRetrofitInterface::class.java)
+
+        //호출 전 loading
+        autoLoginView.onAutoLoginLoading()
+
+        //api 호출 후 응답받으면 callback
+        authService.autoLogin(jwt).enqueue(object : Callback<AuthResponse> {
+            @SuppressLint("LongLogTag")
+            override fun onResponse(call: Call<AuthResponse?>, response: Response<AuthResponse?>) {
+                Log.d("AUTOLOGINACT/API_RESPONSE", response.toString())
+
+                if(response.isSuccessful && response.code() == 200) {
+                    val resp = response.body()!!
+                    Log.d("AUTOLOGINACT/API_RESPONSE-FLO", resp.toString())
+
+                    when (resp.code) {
+                        1000 -> autoLoginView.onAutoLoginSuccess(resp.result!!)
+                        else -> autoLoginView.onAutoLoginFailure(resp.code, resp.message)
+                    }
+                }
+            }
+
+            //네트워크 실패
+            override fun onFailure(call: Call<AuthResponse?>, t: Throwable) {
+                Log.d("AUTOLOGINACT/API_ERROR", t.message.toString())
+                autoLoginView.onAutoLoginFailure(400, t.message.toString())
             }
         })
     }

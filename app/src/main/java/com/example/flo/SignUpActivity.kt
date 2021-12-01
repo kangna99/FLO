@@ -64,37 +64,10 @@ class SignUpActivity : AppCompatActivity(), SignUpView {
         authService.setSignUpView(this)
 
         authService.signUp(getUser())
+        saveUserName(this, getUser().name)
 
         Log.d("SIGNUPACT/ASYNC", "Hello, ")
-        val retrofit = Retrofit.Builder().baseUrl("http://13.125.121.202").addConverterFactory(GsonConverterFactory.create()).build()
 
-//        val signUpService = retrofit.create(AuthRetrofitInterface::class.java)
-//        Log.d("SIGNUPACT", getUser().toString())
-//
-//        signUpService.signUp(getUser()).enqueue(object : Callback<AuthResponse>{
-//            //응답 처리
-//            @SuppressLint("LongLogTag")
-//            override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
-//                Log.d("SIGNUPACT/API_RESPONSE", response.toString())
-//
-//                val resp = response.body()!!
-//
-//                Log.d("SIGNUPACT/API_RESPONSE-FLO", resp.toString())
-//
-//                when(resp.code) {
-//                    1000 -> finish()
-//                    2016, 2017-> {
-//                        showToast(resp.message)
-//                    }
-//
-//                }
-//            }
-//
-//            //네트워크 실패
-//            override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-//                Log.d("SIGNUPACT/API_ERROR", t.message.toString())
-//            }
-//        })
     }
 
     override fun onSignUpLoading() {

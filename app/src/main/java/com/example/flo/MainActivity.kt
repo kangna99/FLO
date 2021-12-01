@@ -314,6 +314,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp2,
+                "",
                 false,
                 1,
                 1
@@ -330,6 +331,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp2,
+                "",
                 false,
                 1,
                 2,
@@ -346,6 +348,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp,
+                "",
                 false,
                 2
             )
@@ -360,6 +363,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp3,
+                "",
                 false,
                 3
             )
@@ -374,6 +378,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp4,
+                "",
                 false,
                 4
             )
@@ -388,6 +393,7 @@ class MainActivity : AppCompatActivity() {
                 false,
                 0,
                 R.drawable.img_album_exp5,
+                "",
                 false,
                 5
             )

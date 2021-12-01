@@ -50,7 +50,7 @@ class LockerFragment : Fragment() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         } else { //로그인 된 상태
-            binding.lockerNicknameTv.text = userDB.userDao().getUserNickname(userIdx)
+            binding.lockerNicknameTv.text = getUserName(requireContext())
             binding.lockerLoginTv.text = "로그아웃"
 
             binding.lockerLoginTv.setOnClickListener {

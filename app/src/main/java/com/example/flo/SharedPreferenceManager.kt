@@ -31,4 +31,16 @@ fun getUserIdx(context: Context): Int {
     return spf.getInt("userIdx", 0)
 }
 
+fun saveUserName(context: Context, name: String) {
+    val spf = context.getSharedPreferences("user", AppCompatActivity.MODE_PRIVATE)
+    val editor = spf.edit()
 
+    editor.putString("name", name)
+    editor.apply()
+}
+
+fun getUserName(context: Context): String? {
+    val spf = context.getSharedPreferences("user", AppCompatActivity.MODE_PRIVATE)
+
+    return spf.getString("name", "")
+}

@@ -135,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/look_chart_rank_cl"
+                    app:layout_constraintBottom_toTopOf="@id/look_chart_rank_rv"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
                     <TextView
@@ -185,345 +185,354 @@
                         app:layout_constraintStart_toStartOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/look_chart_rank_cl"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/look_chart_rank_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/look_chart_info_cl"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/look_chart_rank_cl"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/look_chart_info_cl"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent">-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="7dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:orientation="vertical">-->
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/look_album_exp_iv"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:src="@drawable/img_album_exp2"
-                                    android:scaleType="fitXY" />
-                            </androidx.cardview.widget.CardView>
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="7dp"-->
+<!--                            android:layout_marginBottom="7dp">-->
 
-                            <TextView
-                                android:id="@+id/look_album_rank1_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_exp_iv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp_iv" />
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:id="@+id/look_album_exp_iv"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                app:cardCornerRadius="5dp"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:adjustViewBounds="true"-->
+<!--                                    android:src="@drawable/img_album_exp2"-->
+<!--                                    android:scaleType="fitXY" />-->
+<!--                            </androidx.cardview.widget.CardView>-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp_text_01_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="잠이 안온다"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank1_tv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp_iv"
-                                app:layout_constraintBottom_toTopOf="@id/look_album_exp_text_02_tv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_rank1_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="1"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="22sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_exp_iv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp_iv" />-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp_text_02_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="젠(zen)"
-                                android:textSize="14sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank1_tv"
-                                app:layout_constraintTop_toBottomOf="@id/look_album_exp_text_01_tv"
-                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp_iv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp_text_01_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="잠이 안온다"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="17sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank1_tv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp_iv"-->
+<!--                                app:layout_constraintBottom_toTopOf="@id/look_album_exp_text_02_tv"/>-->
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/btn_miniplayer_play"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp_text_02_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="젠(zen)"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank1_tv"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/look_album_exp_text_01_tv"-->
+<!--                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp_iv"/>-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="7dp">
+<!--                            <ImageView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:src="@drawable/btn_miniplayer_play"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/look_album_exp2_iv"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:src="@drawable/img_album_exp2"
-                                    android:scaleType="fitXY" />
-                            </androidx.cardview.widget.CardView>
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="7dp"-->
+<!--                            android:layout_marginBottom="7dp">-->
 
-                            <TextView
-                                android:id="@+id/look_album_rank2_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_exp2_iv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp2_iv" />
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:id="@+id/look_album_exp2_iv"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                app:cardCornerRadius="5dp"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:adjustViewBounds="true"-->
+<!--                                    android:src="@drawable/img_album_exp2"-->
+<!--                                    android:scaleType="fitXY" />-->
+<!--                            </androidx.cardview.widget.CardView>-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp2_text_01_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="잠이 안온다"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank2_tv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp2_iv"
-                                app:layout_constraintBottom_toTopOf="@id/look_album_exp2_text_02_tv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_rank2_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="2"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="22sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_exp2_iv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp2_iv" />-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp2_text_02_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="젠(zen)"
-                                android:textSize="14sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank2_tv"
-                                app:layout_constraintTop_toBottomOf="@id/look_album_exp2_text_01_tv"
-                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp2_iv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp2_text_01_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="잠이 안온다"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="17sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank2_tv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp2_iv"-->
+<!--                                app:layout_constraintBottom_toTopOf="@id/look_album_exp2_text_02_tv"/>-->
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/btn_miniplayer_play"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp2_text_02_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="젠(zen)"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank2_tv"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/look_album_exp2_text_01_tv"-->
+<!--                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp2_iv"/>-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="7dp">
+<!--                            <ImageView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:src="@drawable/btn_miniplayer_play"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/look_album_exp3_iv"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:src="@drawable/img_album_exp2"
-                                    android:scaleType="fitXY" />
-                            </androidx.cardview.widget.CardView>
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="7dp"-->
+<!--                            android:layout_marginBottom="7dp">-->
 
-                            <TextView
-                                android:id="@+id/look_album_rank3_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="3"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_exp3_iv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp3_iv" />
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:id="@+id/look_album_exp3_iv"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                app:cardCornerRadius="5dp"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:adjustViewBounds="true"-->
+<!--                                    android:src="@drawable/img_album_exp2"-->
+<!--                                    android:scaleType="fitXY" />-->
+<!--                            </androidx.cardview.widget.CardView>-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp3_text_01_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="잠이 안온다"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank3_tv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp3_iv"
-                                app:layout_constraintBottom_toTopOf="@id/look_album_exp3_text_02_tv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_rank3_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="3"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="22sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_exp3_iv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp3_iv" />-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp3_text_02_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="젠(zen)"
-                                android:textSize="14sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank3_tv"
-                                app:layout_constraintTop_toBottomOf="@id/look_album_exp3_text_01_tv"
-                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp3_iv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp3_text_01_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="잠이 안온다"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="17sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank3_tv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp3_iv"-->
+<!--                                app:layout_constraintBottom_toTopOf="@id/look_album_exp3_text_02_tv"/>-->
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/btn_miniplayer_play"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp3_text_02_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="젠(zen)"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank3_tv"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/look_album_exp3_text_01_tv"-->
+<!--                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp3_iv"/>-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="7dp">
+<!--                            <ImageView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:src="@drawable/btn_miniplayer_play"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/look_album_exp4_iv"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:src="@drawable/img_album_exp2"
-                                    android:scaleType="fitXY" />
-                            </androidx.cardview.widget.CardView>
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="7dp"-->
+<!--                            android:layout_marginBottom="7dp">-->
 
-                            <TextView
-                                android:id="@+id/look_album_rank4_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="4"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_exp4_iv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp4_iv" />
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:id="@+id/look_album_exp4_iv"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                app:cardCornerRadius="5dp"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:adjustViewBounds="true"-->
+<!--                                    android:src="@drawable/img_album_exp2"-->
+<!--                                    android:scaleType="fitXY" />-->
+<!--                            </androidx.cardview.widget.CardView>-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp4_text_01_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="잠이 안온다"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank4_tv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp4_iv"
-                                app:layout_constraintBottom_toTopOf="@id/look_album_exp4_text_02_tv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_rank4_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="4"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="22sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_exp4_iv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp4_iv" />-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp4_text_02_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="젠(zen)"
-                                android:textSize="14sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank4_tv"
-                                app:layout_constraintTop_toBottomOf="@id/look_album_exp4_text_01_tv"
-                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp4_iv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp4_text_01_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="잠이 안온다"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="17sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank4_tv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp4_iv"-->
+<!--                                app:layout_constraintBottom_toTopOf="@id/look_album_exp4_text_02_tv"/>-->
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/btn_miniplayer_play"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp4_text_02_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="젠(zen)"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank4_tv"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/look_album_exp4_text_01_tv"-->
+<!--                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp4_iv"/>-->
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="7dp">
+<!--                            <ImageView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:src="@drawable/btn_miniplayer_play"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/look_album_exp5_iv"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                app:cardCornerRadius="5dp"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintStart_toStartOf="parent">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:adjustViewBounds="true"
-                                    android:src="@drawable/img_album_exp2"
-                                    android:scaleType="fitXY" />
-                            </androidx.cardview.widget.CardView>
+<!--                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="7dp"-->
+<!--                            android:layout_marginBottom="7dp">-->
 
-                            <TextView
-                                android:id="@+id/look_album_rank5_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="5"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_exp5_iv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp5_iv" />
+<!--                            <androidx.cardview.widget.CardView-->
+<!--                                android:id="@+id/look_album_exp5_iv"-->
+<!--                                android:layout_width="50dp"-->
+<!--                                android:layout_height="50dp"-->
+<!--                                app:cardCornerRadius="5dp"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintStart_toStartOf="parent">-->
+<!--                                <ImageView-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:adjustViewBounds="true"-->
+<!--                                    android:src="@drawable/img_album_exp2"-->
+<!--                                    android:scaleType="fitXY" />-->
+<!--                            </androidx.cardview.widget.CardView>-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp5_text_01_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="잠이 안온다"
-                                android:textColor="@color/black"
-                                android:textSize="17sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank5_tv"
-                                app:layout_constraintTop_toTopOf="@id/look_album_exp5_iv"
-                                app:layout_constraintBottom_toTopOf="@id/look_album_exp5_text_02_tv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_rank5_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="5"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="22sp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_exp5_iv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp5_iv" />-->
 
-                            <TextView
-                                android:id="@+id/look_album_exp5_text_02_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="젠(zen)"
-                                android:textSize="14sp"
-                                android:layout_marginStart="15dp"
-                                app:layout_constraintStart_toEndOf="@id/look_album_rank5_tv"
-                                app:layout_constraintTop_toBottomOf="@id/look_album_exp5_text_01_tv"
-                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp5_iv"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp5_text_01_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="잠이 안온다"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="17sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank5_tv"-->
+<!--                                app:layout_constraintTop_toTopOf="@id/look_album_exp5_iv"-->
+<!--                                app:layout_constraintBottom_toTopOf="@id/look_album_exp5_text_02_tv"/>-->
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:src="@drawable/btn_miniplayer_play"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/look_album_exp5_text_02_tv"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="젠(zen)"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:layout_marginStart="15dp"-->
+<!--                                app:layout_constraintStart_toEndOf="@id/look_album_rank5_tv"-->
+<!--                                app:layout_constraintTop_toBottomOf="@id/look_album_exp5_text_01_tv"-->
+<!--                                app:layout_constraintBottom_toBottomOf="@id/look_album_exp5_iv"/>-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="30dp"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:src="@drawable/btn_miniplayer_play"-->
+<!--                                app:layout_constraintTop_toTopOf="parent"-->
+<!--                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"/>-->
+<!--                        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -732,59 +741,15 @@
 
         </GridLayout>
 
-<!--        <GridLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:columnCount="1"-->
-<!--            android:layout_marginStart="20dp"-->
-<!--            android:layout_marginEnd="20dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/look_category3_tv">-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="10dp">-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_1"/>-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_2"/>-->
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="10dp">-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_3"/>-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_1"/>-->
-<!--            </LinearLayout>-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="10dp">-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_1"/>-->
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:src="@drawable/img_jenre_exp_2"/>-->
-<!--            </LinearLayout>-->
-<!--        </GridLayout>-->
+        <ProgressBar
+            android:id="@+id/look_loading_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/flo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
