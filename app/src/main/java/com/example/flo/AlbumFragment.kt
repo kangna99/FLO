@@ -83,7 +83,7 @@ class AlbumFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-        val userId = getJwt()
+        val userId = getUserIdx(requireContext())
 
         binding.albumBtnLikeIv.setOnClickListener {
             if (isLiked) { //좋아요 -> 좋아요 취소
@@ -123,13 +123,6 @@ class AlbumFragment : Fragment() {
 //        }
     }
 
-    private fun getJwt(): Int {
-        //fragment에서 sharedPreferences 사용하기
-        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
-
-        return spf!!.getInt("jwt", 0)
-    }
-
     private fun likeAlbum(userId: Int, albumId: Int) {
         val songDB = SongDatabase.getInstance(requireContext())!! //fragment에서는 이렇게 씀
         val like = Like(userId, albumId)
@@ -139,7 +132,7 @@ class AlbumFragment : Fragment() {
 
     private fun isLikedAlbum(albumId: Int): Boolean { //좋아요가 눌려있는지 안눌려있는지 확인하는 함수
         val songDB = SongDatabase.getInstance(requireContext())!!
-        val userId = getJwt()
+        val userId = getUserIdx(requireContext())
 
         val likeId: Int? = songDB.albumDao().isLikeAlbum(userId, albumId)
 

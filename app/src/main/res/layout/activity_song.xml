@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="00:00"
-        android:textColor="@color/highlight"
+        android:textColor="@color/flo"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/song_player_sb"
         app:layout_constraintTop_toBottomOf="@id/song_player_sb" />

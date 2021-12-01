@@ -41,21 +41,14 @@ class SavedAlbumFragment : Fragment() {
 
         lockerAlbumRVAdapter.setMyItemClickListener(object : AlbumLockerRVAdapter.MyItemClickListener{
             override fun onRemoveAlbum(albumId: Int) {
-                albumDB.albumDao().disLikeAlbum(getJwt(), albumId)
-                albumDB.albumDao().getLikedAlbums(getJwt())
+                albumDB.albumDao().disLikeAlbum(getUserIdx(requireContext()), albumId)
+                albumDB.albumDao().getLikedAlbums(getUserIdx(requireContext()))
             }
         })
 
         //리사이클러뷰에 어댑터를 연결
         binding.lockerSaveAlbumRv.adapter = lockerAlbumRVAdapter
 
-        lockerAlbumRVAdapter.addAlbums(albumDB.albumDao().getLikedAlbums(getJwt()) as ArrayList)
-    }
-
-    private fun getJwt(): Int {
-        //fragment에서 sharedPreferences 사용하기
-        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
-
-        return spf!!.getInt("jwt", 0)
+        lockerAlbumRVAdapter.addAlbums(albumDB.albumDao().getLikedAlbums(getUserIdx(requireContext())) as ArrayList)
     }
 }

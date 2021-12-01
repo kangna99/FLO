@@ -41,16 +41,16 @@ class LockerFragment : Fragment() {
     }
 
     private fun initView() {
-        val jwt = getJwt()//jwt를 가져오는 함수
+        val userIdx = getUserIdx(requireContext())//jwt를 가져오는 함수
 
-        if(jwt == 0) { //로그인하지 않은 상태
+        if(userIdx == 0) { //로그인하지 않은 상태
             binding.lockerLoginTv.text = "로그인"
 
             binding.lockerLoginTv.setOnClickListener {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         } else { //로그인 된 상태
-            binding.lockerNicknameTv.text = userDB.userDao().getUserNickname(jwt)
+            binding.lockerNicknameTv.text = userDB.userDao().getUserNickname(userIdx)
             binding.lockerLoginTv.text = "로그아웃"
 
             binding.lockerLoginTv.setOnClickListener {
@@ -60,19 +60,12 @@ class LockerFragment : Fragment() {
             }
         }
     }
-    
-    private fun getJwt(): Int {
-        //fragment에서 sharedPreferences 사용하기
-        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
-
-        return spf!!.getInt("jwt", 0)
-    }
 
     private fun logout() { //로그아웃 함수
         val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
         val editor = spf!!.edit()
 
-        editor.remove("jwt")
+        editor.remove("userIdx")
         editor.apply()
     }
 

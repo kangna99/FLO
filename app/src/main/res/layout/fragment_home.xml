@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="종합"
-            android:textColor="@color/highlight"
+            android:textColor="@color/flo"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/home_category1_tv"
