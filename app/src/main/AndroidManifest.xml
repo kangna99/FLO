@@ -13,17 +13,17 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Flo">
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.flo.MainActivity"/>
-        <activity android:name="com.example.flo.SongActivity"/>
-        <activity android:name="com.example.flo.LoginActivity"/>
-        <activity android:name="com.example.flo.SignUpActivity"/>
+        <activity android:name="com.example.flo.ui.main.MainActivity"/>
+        <activity android:name="com.example.flo.ui.song.SongActivity"/>
+        <activity android:name="com.example.flo.ui.signin.LoginActivity"/>
+        <activity android:name="com.example.flo.ui.signup.SignUpActivity"/>
     </application>
 
 </manifest>
